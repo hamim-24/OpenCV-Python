@@ -1,7 +1,8 @@
 import cv2 as cv
 
-video = cv.VideoCapture(0) # start video
-if not video.isOpened(): # if not open
+video = cv.VideoCapture(0) # or it takes a video file path as an argument
+
+if not video.isOpened():
     print("Can not open camera")
 
 while(True):
@@ -13,17 +14,14 @@ while(True):
         print("Can not receive frame, Exiting...")
         break
 
-    ret = video.set(cv.CAP_PROP_FRAME_WIDTH, 600) # set the width of the frame
-    ret = video.set(cv.CAP_PROP_FRAME_HEIGHT, 1000) # set the height of the frame
-    frame = cv.flip(frame, 1) # flip the frame horizontally
+    frame_resize = cv.resize(frame, (1000, 600))
+    frame_resize = cv.flip(frame_resize, 1)
 
-    #gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    cv.imshow("frame", frame) # display the frame
-    k = cv.waitKey(1) # wait for 1 millisecond for a key press
-    # if the key pressed is 'q', then break the loop
+    cv.imshow("frame", frame_resize) 
+    k = cv.waitKey(1)
     if k == ord('q'):
         break
 
 
-video.release() # release the video capture object
-cv.destroyAllWindows() # Uncomment the following lines to use the webcam for video capture
+video.release() 
+cv.destroyAllWindows()
